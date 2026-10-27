@@ -1,17 +1,17 @@
-# Extractor de datos climáticos
+# Climate data extractor
 
-`clima_json_microclimas.py` descarga datos diarios de [NASA POWER](https://power.larc.nasa.gov/) para una rejilla de puntos dentro de un área, los resume por punto y genera un JSON con las variables de microclima que usamos para construir los escenarios de AGROPLANT.
+`clima_json_microclimas.py` downloads daily data from [NASA POWER](https://power.larc.nasa.gov/) for a grid of points within an area, summarizes it per point and produces a JSON file with the microclimate variables used to build AGROPLANT's scenarios.
 
-## Requisitos
+## Requirements
 
-- Python 3.9 o superior
+- Python 3.9 or later
 - [`requests`](https://pypi.org/project/requests/)
 
 ```bash
 pip install requests
 ```
 
-## Uso
+## Usage
 
 ```bash
 python clima_json_microclimas.py \
@@ -22,27 +22,27 @@ python clima_json_microclimas.py \
   --out clima_microclimas.json
 ```
 
-- `--bbox`: `lon_min,lat_min,lon_max,lat_max`. El valor por defecto es una aproximación de Arabia Saudí.
-- `--step`: separación entre puntos de la rejilla, en grados. Cuanto más pequeño, más puntos y más peticiones a la API.
-- `--community`: `AG` (agricultura), `RE` (energía renovable) o `SB` (edificios). Por defecto, `AG`.
+- `--bbox`: `lon_min,lat_min,lon_max,lat_max`. The default is an approximation of Saudi Arabia.
+- `--step`: spacing between grid points, in degrees. Smaller values mean more points and more API requests.
+- `--community`: `AG` (agriculture), `RE` (renewable energy) or `SB` (buildings). Defaults to `AG`.
 
-## Qué genera
+## Output
 
-Un JSON con la fuente, los parámetros, el área y la lista de puntos. Para cada punto:
+A JSON file with the source, parameters, area and list of points. For each point:
 
-| Campo | Contenido |
+| Field | Contents |
 | --- | --- |
-| `stats` | Precipitación anual, temperatura media, humedad relativa media y radiación solar media. |
-| `microclimate` | Etiqueta (`desert`, `semiarid`, `temperate`), humedad normalizada, exposición solar e índice de sequía. |
-| `series` | Serie diaria con fecha, temperatura, precipitación, humedad y radiación. |
+| `stats` | Annual precipitation, mean temperature, mean relative humidity and mean solar radiation. |
+| `microclimate` | Label (`desert`, `semiarid`, `temperate`), normalized humidity, solar exposure and drought index. |
+| `series` | Daily series with date, temperature, precipitation, humidity and radiation. |
 
-## Fuente
+## Source
 
-- [NASA POWER — API temporal/daily](https://power.larc.nasa.gov/docs/services/api/temporal/daily/)
-- [NASA POWER — parámetros](https://power.larc.nasa.gov/docs/tutorials/parameters/)
+- [NASA POWER — temporal/daily API](https://power.larc.nasa.gov/docs/services/api/temporal/daily/)
+- [NASA POWER — parameters](https://power.larc.nasa.gov/docs/tutorials/parameters/)
 
-Los escenarios de AGROPLANT también se apoyaron en datos de [NASA AppEEARS](https://appeears.earthdatacloud.nasa.gov/) para caracterizar distintos ecosistemas.
+The AGROPLANT scenarios also drew on [NASA AppEEARS](https://appeears.earthdatacloud.nasa.gov/) data to characterize different ecosystems.
 
 ---
 
-El código de este extractor se distribuye bajo la [licencia MIT](../LICENSE).
+The code in this extractor is released under the [MIT license](../LICENSE).

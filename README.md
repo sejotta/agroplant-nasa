@@ -1,131 +1,120 @@
 <h1 align="center">AGROPLANT</h1>
 
-<p align="center"><strong>Un simulador de agricultura que se juega entre el tablero y el móvil.</strong></p>
+<p align="center"><strong>A farming simulator played between a board and a phone.</strong></p>
 
 <p align="center">
   <img alt="NASA Space Apps 2025" src="https://img.shields.io/badge/NASA%20Space%20Apps-2025-0B3D91?style=flat-square">
-  <img alt="Space Apps Zaragoza, premio local 2025" src="https://img.shields.io/badge/Space%20Apps%20Zaragoza-premio%20local-2E7D32?style=flat-square">
+  <img alt="Space Apps Zaragoza, local award 2025" src="https://img.shields.io/badge/Space%20Apps%20Zaragoza-local%20award-2E7D32?style=flat-square">
 </p>
 
 <p align="center">
-  <img src="assets/hero.jpg" alt="AGROPLANT: campo de cultivo al atardecer" width="100%">
+  <img src="assets/hero.jpg" alt="AGROPLANT: farmland at sunset" width="100%">
 </p>
 
-## ¿Qué es AGROPLANT?
+## What is AGROPLANT?
 
-**AGROPLANT** es un simulador de agricultura para jugar con las manos y con el móvil al mismo tiempo. Te pone en la piel de un agricultor que tiene que sacar adelante una cosecha en sitios donde nada es fácil: el desierto de Arabia Saudí, en medio de la selva amazónica o junto a una central nuclear en Kazajistán.
+**AGROPLANT** is a farming simulator you play with your hands and your phone at the same time. It puts you in the shoes of a farmer trying to bring in a harvest in places where nothing comes easy: the Saudi Arabian desert, deep in the Amazon rainforest, or next to a nuclear power plant in Kazakhstan.
 
-Cada partida es una misión. Tienes que cultivar tomates, patatas o alfalfa, decidir cuándo regar y cuándo abonar, y llegar al final con la cosecha adelante, algo de dinero en el bolsillo y la tierra en condiciones. El reto no es solo producir más: es hacerlo sin pasarte con los fertilizantes, porque cada decisión tiene un precio para el bolsillo y para el planeta.
+Every game is a mission. You have to grow tomatoes, potatoes or alfalfa, decide when to water and when to fertilize, and make it to the end with the crop still standing, some money in your pocket and the land in good shape. The challenge isn't just about producing more: it's about doing it without overdoing fertilizers, because every decision has a cost for your wallet and for the planet.
 
-## Cómo funciona el juguete
+## How the game works
 
 <p align="center">
-  <img src="assets/como-funciona.jpg" alt="Esquema de AGROPLANT: datos de NASA, tablero con ESP32, app y juego físico" width="100%">
+  <img src="assets/como-funciona.jpg" alt="AGROPLANT overview: NASA data, ESP32 board, app and physical game" width="100%">
 </p>
 
-El juego tiene dos mitades que se hablan entre sí: un tablero físico con fichas y sensores, y una app que se abre en el navegador del móvil.
+The game has two halves that talk to each other: a physical board with tiles and sensors, and an app that opens in your phone's browser.
 
-1. **El tablero es la finca.** Nueve parcelas, de la A1 a la C3, con su hueco para cada cultivo. El tablero está conectado: lleva sensores de suelo y un lector de fichas.
-2. **Las fichas son los cultivos.** Tomate, patata y alfalfa. Cada ficha lleva un chip RFID, como un llavero de portal.
-3. **Acerca la ficha al lector.** La app reconoce el cultivo y actualiza esa parcela en el móvil. No hay que instalar nada: el móvil se conecta al Wi-Fi del tablero y abre la app en el navegador.
-4. **Mira el parte de la parcela.** Tipo de cultivo, estado, riego, nutrientes, puntos eco y edad.
-5. **Toma una decisión.** Regar, abonar o nitrogenar. Cada acción gasta parte del presupuesto y tiene consecuencias.
-6. **Pasa el turno.** El tiempo avanza, el cultivo envejece y el clima del escenario pasa factura.
-7. **Cumple la misión.** Cosecha, vende y termina con la cosecha adelante, dinero en el bolsillo y la tierra en condiciones.
+1. **The board is the farm.** Nine plots, A1 to C3, each with a slot for a crop. The board is connected: it has soil sensors and a tile reader.
+2. **The tiles are the crops.** Tomato, potato and alfalfa. Each tile carries an RFID chip, like a building access fob.
+3. **Hold a tile up to the reader.** The app recognizes the crop and updates that plot on your phone. Nothing to install: your phone joins the board's Wi-Fi and opens the app in the browser.
+4. **Check the plot report.** Crop type, condition, watering, nutrients, eco points and age.
+5. **Make a decision.** Water, fertilize or apply nitrogen. Every action spends part of your budget and has consequences.
+6. **End the turn.** Time moves on, the crop ages and the scenario's climate takes its toll.
+7. **Complete the mission.** Harvest, sell, and finish with the crop still standing, money in your pocket and the land in good shape.
 
 <p align="center">
-  <img src="assets/juego-en-mesa.jpg" alt="El tablero, las fichas, el presupuesto y la app de AGROPLANT" width="80%"><br>
-  <sub>El tablero, las fichas, el presupuesto y la app: así se juega.</sub>
+  <img src="assets/juego-en-mesa.jpg" alt="The AGROPLANT board, tiles, budget and app" width="80%"><br>
+  <sub>The board, the tiles, the budget and the app: this is how it plays.</sub>
 </p>
 
-## La app
+## The app
 
-La app es el cuaderno de campo del jugador. En la pantalla principal ves las nueve parcelas y el turno; al abrir una, aparece su ficha.
+The app is the player's field notebook. The main screen shows the nine plots and the current turn; open a plot and its card appears.
 
-| Parcelas | Detalle del cultivo |
+| Plots | Crop details |
 | :---: | :---: |
-| <img src="assets/app-parcelas.png" width="270" alt="Pantalla de parcelas de la app"> | <img src="assets/app-cultivo.png" width="270" alt="Detalle de un cultivo en la app"> |
-| La finca de un vistazo | Riego, nutrientes, puntos eco y edad |
+| <img src="assets/app-parcelas.png" width="270" alt="AGROPLANT app plot screen"> | <img src="assets/app-cultivo.png" width="270" alt="Crop details in the AGROPLANT app"> |
+| The farm at a glance | Watering, nutrients, eco points and age |
 
-| En la app | Qué te cuenta |
+| In the app | What it tells you |
 | --- | --- |
-| **TIPO** | Tomate, patata o alfalfa. |
-| **ESTADO** | Cómo está el cultivo. |
-| **RIEGO** | De 0 a 100 %. |
-| **NUTRIENTES** | De 0 a 100 %. |
-| **PUNTOS ECO** | Lo respetuosa que es la cosecha con la tierra. |
-| **EDAD** | Turnos desde que se plantó. |
+| **TYPE** | Tomato, potato or alfalfa. |
+| **CONDITION** | How the crop is doing. |
+| **WATERING** | From 0 to 100%. |
+| **NUTRIENTS** | From 0 to 100%. |
+| **ECO POINTS** | How environmentally friendly the crop is. |
+| **AGE** | Turns since it was planted. |
 
-Y estas acciones:
+And these actions:
 
-- **Regar** — repone el agua de la parcela.
-- **Abonar** — sube los nutrientes.
-- **Nitrogenar** — usa fertilizante nitrogenado: empuja la producción, pero baja los puntos eco y el valor de la cosecha.
-- **Cambio de turno** — avanza el tiempo.
+- **Water** — tops up the plot's water.
+- **Fertilize** — raises nutrients.
+- **Apply nitrogen** — nitrogen fertilizer: boosts production, but lowers eco points and the crop's value.
+- **End turn** — moves time forward.
 
-## Tres sitios, tres problemas
+## Three places, three problems
 
-Los escenarios no son decorados: cada uno tiene su clima, su suelo y su dificultad.
+The scenarios aren't just backdrops: each has its own climate, soil and difficulty.
 
-- **Arabia Saudí** — calor, sol y muy poca agua. Aquí cada gota cuenta.
-- **Amazonas** — humedad, lluvia y una vegetación que no perdona. El exceso también es un problema.
-- **Kazajistán** — un entorno industrial, junto a una central nuclear, donde cultivar no es lo primero que uno esperaría.
+- **Saudi Arabia** — heat, sun and very little water. Every drop counts.
+- **The Amazon** — humidity, rain and vegetation that doesn't forgive. Too much is also a problem.
+- **Kazakhstan** — an industrial setting next to a nuclear power plant, not the first place you'd expect to farm.
 
-Y no son climas inventados: salen de datos reales de la NASA.
+And these aren't made-up climates: they come from real NASA data.
 
-## Vídeos
+## Videos
 
-Si quieres verlo en movimiento:
+If you want to see it in motion:
 
-| | Vídeo | Qué se ve |
+| | Video | What it shows |
 | :---: | --- | --- |
-| ▶ | **[Demo (31 s)](media/agroplant-demo.mp4)** | Del diseño del tablero a una partida en tiempo real. |
-| ▶ | **[Explicación (1 min 10 s)](media/agroplant-explicacion.mp4)** | El equipo cuenta qué es AGROPLANT y cómo se juega. |
+| ▶ | **[Demo (31 s)](media/agroplant-demo.mp4)** | From designing the board to a real-time game. |
+| ▶ | **[Explanation (1 min 10 s)](media/agroplant-explicacion.mp4)** | The team explains what AGROPLANT is and how it plays. |
 
-Los dos vídeos están en el repositorio, en `media/`, en formato MP4.
+Both videos are in the repository, under `media/`, in MP4 format. GitHub doesn't play videos inline in a README, so the links open each file in the repository.
 
-## Por qué lo hicimos
+## Why we built it
 
-Porque la agricultura suele explicarse con titulares: sequía, precios, fertilizantes, emisiones. Nosotros queríamos que se entendiera con las manos. Que te duela gastar el presupuesto, que te tiente el nitrógeno, que veas que una cosecha no sale sola.
+Because farming is usually explained through headlines: drought, prices, fertilizers, emissions. We wanted people to understand it with their hands: to feel the sting of spending their budget, the temptation of nitrogen, and to see that a harvest doesn't just happen.
 
-AGROPLANT no busca dar la razón a nadie: busca que el jugador se ponga un rato en la piel de quien tiene que decidir con el clima en contra, el dinero justo y la tierra en juego.
+AGROPLANT isn't trying to prove anyone right or wrong: it's trying to put the player in the shoes of someone who has to decide with the climate against them, just enough money, and the land at stake.
 
-## Datos reales de NASA
+## Real NASA data
 
-Para que los escenarios no sean ciencia ficción, el juego se apoya en datos públicos de la NASA. El extractor [`data/clima_json_microclimas.py`](data/clima_json_microclimas.py) descarga series diarias de **NASA POWER** —temperatura, precipitación, humedad y radiación solar— para un área y las resume en variables de microclima. Esa es la materia prima con la que se construyen las condiciones de cada nivel. El proyecto también explora datos de **NASA AppEEARS** para caracterizar distintos ecosistemas.
+To keep the scenarios grounded, the game draws on public NASA data. The extractor [`data/clima_json_microclimas.py`](data/clima_json_microclimas.py) downloads daily series from **NASA POWER** — temperature, precipitation, humidity and solar radiation — for an area and turns them into microclimate variables. That's the raw material behind each level's conditions. The project also explored **NASA AppEEARS** data to characterize different ecosystems.
 
-[Instrucciones del extractor →](data/README.md)
+[Extractor instructions →](data/README.md)
 
-## Equipo y premio
+## Team and award
 
 **Diego López Esteban · Martín Rincón Gálvez · Sergio Toro Codo**
 
-AGROPLANT se presentó al reto **NASA Farm Navigators** de la **NASA Space Apps Challenge 2025**, en **Space Apps Zaragoza** (12ª edición, 4–5 de octubre de 2025). El proyecto recibió el **premio local** de la edición.
+AGROPLANT was submitted to the **NASA Farm Navigators** challenge at the **2025 NASA Space Apps Challenge**, **Space Apps Zaragoza** (12th edition, October 4–5, 2025). The project won a local award at the event.
 
 <p align="center">
-  <img src="assets/premio.jpg" alt="Entrega de premios de Space Apps Zaragoza 2025" width="80%"><br>
-  <sub>Entrega de premios de Space Apps Zaragoza 2025.</sub>
+  <img src="assets/premio.jpg" alt="Space Apps Zaragoza 2025 awards ceremony" width="80%"><br>
+  <sub>Space Apps Zaragoza 2025 awards ceremony.</sub>
 </p>
 
-## Licencia
+## License
 
-El **código** de este repositorio —incluido el extractor de `data/`— se distribuye bajo la [licencia MIT](LICENSE).
+The **code** in this repository — including the extractor in `data/` — is released under the [MIT license](LICENSE).
 
-Los **vídeos, fotografías, ilustraciones, el nombre AGROPLANT y el diseño del juego** no están cubiertos por esa licencia: son © 2025 Diego López Esteban, Martín Rincón Gálvez y Sergio Toro Codo, con todos los derechos reservados. Si quieres usar alguno de esos materiales, pide permiso a los autores.
-
-<details>
-<summary><strong>English summary</strong></summary>
-
-<br>
-
-AGROPLANT is a hybrid physical-digital farming game created for the 2025 NASA Space Apps Challenge. Players grow tomatoes, potatoes and alfalfa across three climate-driven scenarios — Saudi Arabia, the Amazon and Kazakhstan — using a board with RFID crop tiles and soil sensors that talks to a phone app. Real NASA climate data (POWER and AppEEARS) sets the conditions for each mission. The project received a local award at Space Apps Zaragoza 2025.
-
-The source code is released under the MIT license. Videos, photographs, illustrations, the AGROPLANT name and the game design remain all rights reserved.
-
-</details>
+The **videos, photographs, illustrations, the AGROPLANT name and the game design** are not covered by that license: they are © 2025 Diego López Esteban, Martín Rincón Gálvez and Sergio Toro Codo, all rights reserved. If you want to use any of these materials, please ask the authors for permission.
 
 <p align="center">
   <sub>© 2025 Diego López Esteban · Martín Rincón Gálvez · Sergio Toro Codo · Zaragoza</sub><br>
-  <sub>Datos: <a href="https://power.larc.nasa.gov/">NASA POWER</a> · <a href="https://appeears.earthdatacloud.nasa.gov/">NASA AppEEARS</a> · Evento: <a href="https://www.spaceappschallenge.org/">NASA Space Apps Challenge</a></sub><br>
-  <sub>Más proyectos en <a href="https://github.com/sejotta">github.com/sejotta</a></sub>
+  <sub>Data: <a href="https://power.larc.nasa.gov/">NASA POWER</a> · <a href="https://appeears.earthdatacloud.nasa.gov/">NASA AppEEARS</a> · Event: <a href="https://www.spaceappschallenge.org/">NASA Space Apps Challenge</a></sub><br>
+  <sub>More projects at <a href="https://github.com/sejotta">github.com/sejotta</a></sub>
 </p>

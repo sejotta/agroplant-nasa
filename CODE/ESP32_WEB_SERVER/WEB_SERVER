@@ -1,0 +1,198 @@
+#include <WiFi.h>
+#include <WebServer.h>
+
+//VARIABLES GLOBALES
+const char* AP_SSID = "ESP32-Web";
+const char* AP_PASS = "12345678";
+int money = 1; // DINERO visible
+//INICIALIZACIONES
+WebServer server(80);
+extern const char INDEX_HTML[] PROGMEM;
+
+//DECLARACIONES DE FUNCIONES
+String get_tipo_planta(String ID);
+String get_estado_planta(String ID);
+String get_riego_planta(String ID);
+String moneyFmt(int v);
+void inicializar_server(void);
+
+//DECLARACIONES DE ARRAYS Y OTROS
+const char* IDMAP[10] = {"","A1","B1","C1","A2","B2","C2","A3","B3","C3"};
+
+String moneyFmt(int v){ if(v<0) v=0; char b[8]; snprintf(b,sizeof(b),"%03d",v); return String(b); }
+
+// ---------- HTTP handlers ----------
+
+
+
+void setup(){
+  Serial.begin(115200);
+  inicializar_server();
+
+}
+
+void loop(){ 
+  server.handleClient(); 
+}
+
+
+//FUNCIONES WEB SERVER
+void handleCultivoInfo(){
+  if(!server.hasArg("n")){
+    server.send(400, "application/json; charset=utf-8", "{\"error\":\"falta parametro n\"}");
+    return;
+  }
+  int n = server.arg("n").toInt();
+  if(n < 1 || n > 9){
+    server.send(400, "application/json; charset=utf-8", "{\"error\":\"n debe ser 1..9\"}");
+    return;
+  }
+
+  String id = IDMAP[n];
+  // Usa tus funciones para obtener los datos reales
+  String tipo   = get_tipo_planta(id);
+  String estado = get_estado_planta(id);
+  String riego  = get_riego_planta(id);
+
+  String json = "{\"id\":\"" + id +
+                "\",\"tipo\":\"" + tipo +
+                "\",\"estado\":\"" + estado +
+                "\",\"riego\":\"" + riego + "\"}";
+  server.send(200, "application/json; charset=utf-8", json);
+}
+
+void handleRoot(){
+  String page = String(FPSTR(INDEX_HTML));   // leer desde PROGMEM
+  page.replace(">001<", ">" + moneyFmt(money) + "<");
+  server.send(200, "text/html; charset=utf-8", page);
+}
+
+
+
+//FUNCIONES APLICACIÓN POR CORREGIR
+String get_tipo_planta(String ID){  // demo: cambia según tu clase
+  if(ID=="A1") return "tomate";
+  if(ID=="B1") return "tomate";
+  return "alfalfa";
+}
+String get_estado_planta(String ID){
+  if(ID=="B1") return "sana";
+  return "moribunda";
+}
+String get_riego_planta(String ID){
+  if(ID=="B1") return "seca";
+  return "regada";
+}
+
+
+//FUNCIONES DE INICIALIZACIÓN
+void inicializar_server(void){
+  WiFi.mode(WIFI_AP);
+  WiFi.softAP(AP_SSID, AP_PASS);
+
+  server.on("/", HTTP_GET, handleRoot);
+  server.on("/cultivo_info", HTTP_GET, handleCultivoInfo);
+  server.begin();
+}
+
+
+//CÓDIGO HTML
+const char INDEX_HTML[] PROGMEM = R"HTML(<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+<title>AGROPLANT</title>
+<style>
+  :root{--grey:#dedede;--cream:#fff6ec;--purple:#e4a6ff}
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#111;margin:0}
+  .wrap{max-width:760px;margin:0 auto;padding:16px}
+  h1{margin:12px 0 6px;text-align:center;font-size:28px}
+  .money{font-weight:800;font-size:18px;margin:8px 0 16px 0;text-align:left}
+  .money span{font-weight:600;margin-left:8px}
+
+  .board{background:var(--cream);border-radius:12px;width:100%;max-width:min(640px,92vw);
+         margin:0 auto;padding:20px;box-sizing:border-box;}
+  .grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:18px;place-items:center;}
+  .plot{width:100%;aspect-ratio:1/1;background:var(--grey);border:none;border-radius:10px;
+        box-shadow:0 2px 0 rgba(0,0,0,.12);cursor:pointer;font-weight:800;
+        font-size:clamp(12px,3.5vw,16px);letter-spacing:.4px;color:#000}
+
+  /* Ventana emergente (pequeña, texto negro) */
+  .overlay[hidden]{display:none}
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.25);display:grid;place-items:center;padding:12px}
+  .modal{background:#fff;width:min(280px,92vw);border-radius:10px;padding:16px;text-align:center;
+         box-shadow:0 16px 48px rgba(0,0,0,.25);color:#000}
+  .modal h2{margin:0 0 12px;font-size:20px;color:#000}
+  .info{ text-align:left; font-weight:800; line-height:1.5; margin:18px 0 }
+  .closeBtn{display:block;margin:12px auto 0;padding:12px 14px;background:var(--purple);
+            border:none;border-radius:6px;font-weight:700;font-size:14px;cursor:pointer;color:#000}
+
+  /* evita gestos que disparen zoom dentro del modal */
+  .overlay, .modal { touch-action: none; }
+  .closeBtn, .plot { touch-action: manipulation; } /* clicks normales fuera/dentro */
+
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>AGROPLANT</h1>
+    <div class="money">🪙​<span id="money">001</span></div>
+
+    <div class="board">
+      <div class="grid">
+        <button class="plot" onclick="openModal(1)">CULTIVO<br>A1</button>
+        <button class="plot" onclick="openModal(2)">CULTIVO<br>B1</button>
+        <button class="plot" onclick="openModal(3)">CULTIVO<br>C1</button>
+        <button class="plot" onclick="openModal(4)">CULTIVO<br>A2</button>
+        <button class="plot" onclick="openModal(5)">CULTIVO<br>B2</button>
+        <button class="plot" onclick="openModal(6)">CULTIVO<br>C2</button>
+        <button class="plot" onclick="openModal(7)">CULTIVO<br>A3</button>
+        <button class="plot" onclick="openModal(8)">CULTIVO<br>B3</button>
+        <button class="plot" onclick="openModal(9)">CULTIVO<br>C3</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="overlay" hidden>
+    <div class="modal" role="dialog" aria-modal="true">
+      <h2 id="modalTitle">CULTIVO</h2>
+      <div class="info">
+        <div>TIPO: <span id="campoTipo">—</span></div>
+        <div>ESTADO: <span id="campoEstado">—</span></div>
+        <div>RIEGO: <span id="campoRiego">—</span></div>
+      </div>
+      <button class="closeBtn" onclick="closeModal()">BOTON CERRAR VENTANA EMERGENTE</button>
+    </div>
+  </div>
+
+<script>
+  const moneyEl = document.getElementById('money');
+  const modal = document.getElementById('modal');
+  const modalTitle = document.getElementById('modalTitle');
+  const campoTipo = document.getElementById('campoTipo');
+  const campoEstado = document.getElementById('campoEstado');
+  const campoRiego = document.getElementById('campoRiego');
+
+  function openModal(n){
+    // pedir datos al ESP32
+    fetch('/cultivo_info?n='+n, {cache:'no-store'})
+      .then(r => r.json())
+      .then(d => {
+        modalTitle.textContent = 'CULTIVO ' + d.id;
+        campoTipo.textContent = (d.tipo || '-').toUpperCase();
+        campoEstado.textContent = (d.estado || '-').toUpperCase();
+        campoRiego.textContent = (d.riego || '-').toUpperCase();
+        modal.removeAttribute('hidden');
+      })
+      .catch(() => { modal.removeAttribute('hidden'); });
+  }
+
+  function closeModal(){ modal.setAttribute('hidden',''); }
+  modal.addEventListener('click', e => { if(e.target===modal) closeModal(); });
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+</script>
+</body>
+</html>)HTML";

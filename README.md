@@ -107,12 +107,20 @@ AGROPLANT se presentó al reto **NASA Farm Navigators** de la **NASA Space Apps 
   <sub>Entrega de premios de Space Apps Zaragoza 2025.</sub>
 </p>
 
+## Licencia
+
+El **código** de este repositorio —incluido el extractor de `data/`— se distribuye bajo la [licencia MIT](LICENSE).
+
+Los **vídeos, fotografías, ilustraciones, el nombre AGROPLANT y el diseño del juego** no están cubiertos por esa licencia: son © 2025 Diego López Esteban, Martín Rincón Gálvez y Sergio Toro Codo, con todos los derechos reservados. Si quieres usar alguno de esos materiales, pide permiso a los autores.
+
 <details>
 <summary><strong>English summary</strong></summary>
 
 <br>
 
 AGROPLANT is a hybrid physical-digital farming game created for the 2025 NASA Space Apps Challenge. Players grow tomatoes, potatoes and alfalfa across three climate-driven scenarios — Saudi Arabia, the Amazon and Kazakhstan — using a board with RFID crop tiles and soil sensors that talks to a phone app. Real NASA climate data (POWER and AppEEARS) sets the conditions for each mission. The project received a local award at Space Apps Zaragoza 2025.
+
+The source code is released under the MIT license. Videos, photographs, illustrations, the AGROPLANT name and the game design remain all rights reserved.
 
 </details>
 

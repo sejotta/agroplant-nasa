@@ -42,3 +42,7 @@ Un JSON con la fuente, los parámetros, el área y la lista de puntos. Para cada
 - [NASA POWER — parámetros](https://power.larc.nasa.gov/docs/tutorials/parameters/)
 
 Los escenarios de AGROPLANT también se apoyaron en datos de [NASA AppEEARS](https://appeears.earthdatacloud.nasa.gov/) para caracterizar distintos ecosistemas.
+
+---
+
+El código de este extractor se distribuye bajo la [licencia MIT](../LICENSE).
